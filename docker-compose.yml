@@ -80,3 +80,9 @@ services:
             
         volumes:
         - $PWD/db:/var/lib/mysql
+
+volumes:
+    certs:
+    html:
+    vhostd:
+    confd:
