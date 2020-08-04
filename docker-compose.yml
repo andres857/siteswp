@@ -1,0 +1,84 @@
+version: '3'
+services: 
+
+    nginx-proxy:
+        container_name: proxy 
+        image: jwilder/nginx-proxy
+        ports:
+         - "80:80"
+         - "443:443"
+        volumes:
+         - /var/run/docker.sock:/tmp/docker.sock:ro
+         - certs:/etc/nginx/certs:ro
+         - confd:/etc/nginx/conf.d
+         - vhostd:/etc/nginx/vhost.d
+         - html:/usr/share/nginx/html
+        labels:
+         - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+
+#  lestencrypte
+    letsencrypt:
+        image: duch/letsencrypt-nginx-proxy-companion:stable
+        restart: always
+        volumes:
+        - certs:/etc/nginx/certs:rw
+        - confd:/etc/nginx/conf.d
+        - vhostd:/etc/nginx/vhost.d
+        - html:/usr/share/nginx/html
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+    
+
+
+# CONFIGURATION site 1 test.com
+    server1:
+        container_name: nginx-test.com
+        image: nginx:1.19.0-alpine
+        volumes:
+           - $PWD/site1/config:/etc/nginx/conf.d
+           - $PWD/site1/content:/var/www/html
+
+        environment:
+            - VIRTUAL_HOST=desarrollo.ml
+            - LETSENCRYPT_HOST=desarrollo.ml
+            - LETSENCRYPT_EMAIL=andres857@gmail.com
+        expose: 
+         - "80"
+        links:
+         - test.com
+
+    # CONFIGURATION WORDPRESS 
+    test.com: 
+        container_name: wordpress
+        depends_on:      
+         - db
+        image: wordpress:php7.2-fpm-alpine
+        volumes:      
+         - $PWD/site1/content:/var/www/html
+        environment:
+            WORDPRESS_DB_HOST: db    
+            WORDPRESS_DB_USER: desarrollo 
+            WORDPRESS_DB_PASSWORD: admin
+            WORDPRESS_DB_NAME: testone
+        links:
+         - db
+        
+# CONFIGURATION DATABASE 
+        
+    db:
+        container_name: databaseTest
+        image: mysql:5.7
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        env_file: $PWD/site1/.env
+        environment:
+         - MYSQL_ROOT_PASSWORD=my-secret-pw
+         - MYSQL_DATABASE=testone
+         - MYSQL_USER=desarrollo
+         - MYSQL_PASSWORD=admin  
+        ports: 
+         - "3306:3306"
+            
+        
+        volumes:
+        - $PWD/site1/db:/var/lib/mysql
