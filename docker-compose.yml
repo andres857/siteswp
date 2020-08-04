@@ -9,10 +9,10 @@ services:
          - "443:443"
         volumes:
          - /var/run/docker.sock:/tmp/docker.sock:ro
-         - certs:/etc/nginx/certs:ro
-         - confd:/etc/nginx/conf.d
-         - vhostd:/etc/nginx/vhost.d
-         - html:/usr/share/nginx/html
+         - $PWD/certs:/etc/nginx/certs:ro
+         - $PWD/confd:/etc/nginx/conf.d
+         - $PWD/vhostd:/etc/nginx/vhost.d
+         - $PWD/html:/usr/share/nginx/html
         labels:
          - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
