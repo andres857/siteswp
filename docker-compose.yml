@@ -39,8 +39,8 @@ services:
            - $PWD/content:/var/www/html
 
         environment:
-            - VIRTUAL_HOST=desarrollo.ml
-            - LETSENCRYPT_HOST=desarrollo.ml
+            - VIRTUAL_HOST=desarrolloiot.ml
+            - LETSENCRYPT_HOST=desarrolloiot.ml
             - LETSENCRYPT_EMAIL=andres857@gmail.com
         expose: 
          - "80"
