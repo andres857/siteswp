@@ -35,8 +35,8 @@ services:
         container_name: nginx-test.com
         image: nginx:1.19.0-alpine
         volumes:
-           - $PWD/site1/config:/etc/nginx/conf.d
-           - $PWD/site1/content:/var/www/html
+           - $PWD/nginx:/etc/nginx/conf.d
+           - $PWD/content:/var/www/html
 
         environment:
             - VIRTUAL_HOST=desarrollo.ml
@@ -54,7 +54,7 @@ services:
          - db
         image: wordpress:php7.2-fpm-alpine
         volumes:      
-         - $PWD/site1/content:/var/www/html
+         - $PWD/content:/var/www/html
         environment:
             WORDPRESS_DB_HOST: db    
             WORDPRESS_DB_USER: desarrollo 
@@ -70,7 +70,6 @@ services:
         image: mysql:5.7
         restart: always
         command: --default-authentication-plugin=mysql_native_password
-        env_file: $PWD/site1/.env
         environment:
          - MYSQL_ROOT_PASSWORD=my-secret-pw
          - MYSQL_DATABASE=testone
@@ -79,6 +78,5 @@ services:
         ports: 
          - "3306:3306"
             
-        
         volumes:
-        - $PWD/site1/db:/var/lib/mysql
+        - $PWD/db:/var/lib/mysql
