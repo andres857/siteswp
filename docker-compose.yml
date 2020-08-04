@@ -22,10 +22,10 @@ services:
         image: duch/letsencrypt-nginx-proxy-companion:stable
         restart: always
         volumes:
-        - certs:/etc/nginx/certs:rw
-        - confd:/etc/nginx/conf.d
-        - vhostd:/etc/nginx/vhost.d
-        - html:/usr/share/nginx/html
+        - $PWD/certs:/etc/nginx/certs:rw
+        - $PWD/confd:/etc/nginx/conf.d
+        - $PWD/vhostd:/etc/nginx/vhost.d
+        - $PWD/html:/usr/share/nginx/html
         - /var/run/docker.sock:/var/run/docker.sock:ro
     
 
@@ -81,8 +81,4 @@ services:
         volumes:
         - $PWD/db:/var/lib/mysql
 
-volumes:
-    certs:
-    html:
-    vhostd:
-    confd:
+
