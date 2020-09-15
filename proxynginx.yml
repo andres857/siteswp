@@ -34,3 +34,8 @@ networks:
         external:
             name: wordpress
         
+volumes:
+    certs:
+    html:
+    vhostd:
+    confd:
