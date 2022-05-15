@@ -1,5 +1,4 @@
 #!/bin/bash
-
 read -p 'Database name: ' dbname
 read -p 'Database username: ' dbuser
 read -p 'Database password: ' dbpass
@@ -10,7 +9,7 @@ echo
 DIR="./$wpdomain"
 
 if [ -d "$DIR" ]; then
- echo "${DIR} directory already exists"
+ echo "${DIR} Directory already exists"
  exit 0
 fi
 
