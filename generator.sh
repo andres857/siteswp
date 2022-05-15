@@ -17,7 +17,7 @@ fi
 mkdir -p $wpdomain
 mkdir -p $wpdomain/nginx/conf.d
 
-cat <<EOT >> ./$wpdomain/docker-compose.yml
+cat <<EOT >> ./$wpdomain/docker-compose.yml/default.conf
 version: '3'
 services: 
 
