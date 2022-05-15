@@ -14,9 +14,9 @@ if [ -d "$DIR" ]; then
 fi
 
 mkdir -p $wpdomain
-mkdir -p $wpdomain/nginx/conf.d
+mkdir -p ./$wpdomain/nginx/conf.d
 
-cat <<EOT >> ./$wpdomain/docker-compose.yml/default.conf
+cat <<EOT >> ./$wpdomain/docker-compose.yml
 version: '3'
 services: 
 
@@ -47,7 +47,7 @@ services:
 
 EOT
 
-cat <<EOT >> ./$wpdomain/nginx/conf.d
+cat <<EOT >> ./$wpdomain/nginx/conf.d/defautl.conf
 server {  
 	listen 80;  
 	listen [::]:80;  
